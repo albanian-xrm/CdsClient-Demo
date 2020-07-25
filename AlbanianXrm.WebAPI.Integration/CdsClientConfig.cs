@@ -11,6 +11,7 @@ namespace AlbanianXrm.WebAPI.Integration
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string TokenCache { get; set; }
+        public Guid? CallerId { get; set; }
         public bool UseUniqueInstance { get; set; }
     }
 }
