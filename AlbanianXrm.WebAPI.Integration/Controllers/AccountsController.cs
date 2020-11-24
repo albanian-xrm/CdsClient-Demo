@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AlbanianXrm.WebAPI.Integration.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
@@ -22,7 +23,7 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<object> Get()
-        {
+        {      
             return organizationService.RetrieveMultiple(new QueryExpression("account") { ColumnSet = new ColumnSet("name", "ownerid") }).Entities.Select(u => new
             {
                 Id = u.Id,
@@ -32,10 +33,10 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
         }
 
         [HttpPost]
-        public Guid Post(object account)
+        public Guid Post(AccountBindingModel account)
         {
             var create = new Entity("account");
-            create["name"] = "Test";
+            create["name"] = account.Name ?? "Name";
             return organizationService.Create(create);
         }
 
