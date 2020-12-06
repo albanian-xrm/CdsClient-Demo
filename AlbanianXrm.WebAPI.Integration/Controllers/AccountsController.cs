@@ -26,7 +26,7 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
         {      
             return organizationService.RetrieveMultiple(new QueryExpression("account") { ColumnSet = new ColumnSet("name", "ownerid") }).Entities.Select(u => new
             {
-                Id = u.Id,
+                u.Id,
                 Name = u.GetAttributeValue<string>("name"),
                 Owner = u.GetAttributeValue<EntityReference>("ownerid")?.Name
             });
