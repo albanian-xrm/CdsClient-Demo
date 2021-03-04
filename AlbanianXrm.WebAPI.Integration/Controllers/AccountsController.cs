@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AlbanianXrm.WebAPI.Integration.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.PowerPlatform.Cds.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -13,18 +15,18 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
     [Route("api/[controller]")]
     public class AccountsController : Controller
     {
-        private readonly IOrganizationService organizationService;
+        private readonly CdsServiceClient organizationService;
 
-        public AccountsController(IOrganizationService organizationService)
+        public AccountsController(CdsServiceClient organizationService)
         {
             this.organizationService = organizationService;
         }
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<object> Get()
-        {      
-            return organizationService.RetrieveMultiple(new QueryExpression("account") { ColumnSet = new ColumnSet("name", "ownerid") }).Entities.Select(u => new
+        public async Task<IEnumerable<object>> Get()
+        {
+            return (await organizationService.RetrieveMultipleAsync(new QueryExpression("account") { ColumnSet = new ColumnSet("name", "ownerid") })).Entities.Select(u => new
             {
                 u.Id,
                 Name = u.GetAttributeValue<string>("name"),
@@ -33,19 +35,18 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
         }
 
         [HttpPost]
-        public Guid Post(AccountBindingModel account)
+        public async Task<Guid> Post(AccountBindingModel account)
         {
             var create = new Entity("account");
             create["name"] = account.Name ?? "Name";
-            return organizationService.Create(create);
+            return await organizationService.CreateAsync(create);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(Guid id)
+        public async Task<string> Get(Guid id)
         {
-            return organizationService.Retrieve("account", id, new ColumnSet("name")).GetAttributeValue<string>("name");
+            return (await organizationService.RetrieveAsync("account", id, new ColumnSet("name"))).GetAttributeValue<string>("name");
         }
-
     }
 }

@@ -22,7 +22,7 @@ namespace AlbanianXrm.WebAPI.Integration
         {
             services.AddSingleton(sp =>
                 new SingletonCdsServiceClient(Configuration.GetSection("CdsClient").Get<CdsClientConfig>()));
-            services.AddTransient<IOrganizationService, CdsServiceClient>(sp =>
+            services.AddTransient<CdsServiceClient>(sp =>
                 sp.GetService<SingletonCdsServiceClient>().cdsServiceClient.Clone());
 
             services.AddControllers();
