@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AlbanianXrm.WebAPI.Integration.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.PowerPlatform.Cds.Client;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -15,9 +15,9 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
     [Route("api/[controller]")]
     public class AccountsController : Controller
     {
-        private readonly CdsServiceClient organizationService;
+        private readonly ServiceClient organizationService;
 
-        public AccountsController(CdsServiceClient organizationService)
+        public AccountsController(ServiceClient organizationService)
         {
             this.organizationService = organizationService;
         }

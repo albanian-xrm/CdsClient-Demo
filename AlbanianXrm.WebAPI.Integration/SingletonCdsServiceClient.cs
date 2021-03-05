@@ -1,4 +1,4 @@
-﻿using Microsoft.PowerPlatform.Cds.Client;
+﻿using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace AlbanianXrm.WebAPI.Integration
 {
@@ -6,11 +6,11 @@ namespace AlbanianXrm.WebAPI.Integration
     {
         private class SingletonCdsServiceClient
         {
-            public readonly CdsServiceClient cdsServiceClient;
+            public readonly ServiceClient cdsServiceClient;
 
             public SingletonCdsServiceClient(CdsClientConfig cdsClientConfig)
             {
-                cdsServiceClient = new CdsServiceClient(cdsClientConfig.Uri, cdsClientConfig.ClientId, cdsClientConfig.ClientSecret, cdsClientConfig.UseUniqueInstance);
+                cdsServiceClient = new ServiceClient(cdsClientConfig.Uri, cdsClientConfig.ClientId, cdsClientConfig.ClientSecret, cdsClientConfig.UseUniqueInstance);
                 if (cdsClientConfig.CallerId.HasValue)
                 {
                     cdsServiceClient.CallerId = cdsClientConfig.CallerId.Value;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.PowerPlatform.Cds.Client;
+using Microsoft.PowerPlatform.Dataverse.Client;
 using Microsoft.Xrm.Sdk.Query;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,9 +13,9 @@ namespace AlbanianXrm.WebAPI.Integration.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
-        private readonly CdsServiceClient organizationService;
+        private readonly ServiceClient organizationService;
 
-        public UsersController(CdsServiceClient organizationService)
+        public UsersController(ServiceClient organizationService)
         {
             this.organizationService = organizationService;
         }

@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.PowerPlatform.Cds.Client;
-using Microsoft.Xrm.Sdk;
+using Microsoft.PowerPlatform.Dataverse.Client;
 
 namespace AlbanianXrm.WebAPI.Integration
 {
@@ -22,7 +21,7 @@ namespace AlbanianXrm.WebAPI.Integration
         {
             services.AddSingleton(sp =>
                 new SingletonCdsServiceClient(Configuration.GetSection("CdsClient").Get<CdsClientConfig>()));
-            services.AddTransient<CdsServiceClient>(sp =>
+            services.AddTransient<ServiceClient>(sp =>
                 sp.GetService<SingletonCdsServiceClient>().cdsServiceClient.Clone());
 
             services.AddControllers();
